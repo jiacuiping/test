@@ -60,17 +60,14 @@ $s = "IV";
 $s = "IX";
 $s = "LVIII";
 $s = "MCMXCIV";
-$s = "D";
-function romanToInt($s) {
+//$s = "D";
+/*function romanToInt($s) {
     $res = 0;
 
     $arr1 = ['I' => 1, 'V' => 5, 'X' => 10, 'L' => 50, 'C' => 100, 'D' => 500, 'M' => 1000];
     $arr2 = ["IV" => 4, "IX" => 9, "XL" => 40, "XC" => 90, "CD" => 400, "CM" => 900];
 
     $arr = array_merge($arr1, $arr2);
-
-    preg_match_all ("/(CM)|(CD)|(XC)|(XL)|(IX)|(IV)|(IX)|(\w)/", $s, $temp);
-    var_dump($temp);die;
 
     if(array_key_exists($s, $arr)) {
         return $arr[$s];
@@ -93,27 +90,52 @@ function romanToInt($s) {
     }
 
     return $res;
+}*/
+
+function romanToInt($s) {
+    $res = 0;
+
+    $arr = ['I' => 1, 'V' => 5, 'X' => 10, 'L' => 50, 'C' => 100, 'D' => 500, 'M' => 1000,
+        "IV" => 4, "IX" => 9, "XL" => 40, "XC" => 90, "CD" => 400, "CM" => 900];
+
+
+    preg_match_all ("/(CM)|(CD)|(XC)|(XL)|(IX)|(IV)|(\w)/", $s, $temp);
+
+    foreach ($temp[0] as $value) {
+        $res += $arr[$value];
+    }
+
+
+    return $res;
 }
+
+/*function romanToInt($s) {
+    $arr = array(
+        'I'=>1,
+        'V'=>5,
+        'X'=>10,
+        'L'=>50,
+        'C'=>100,
+        'D'=>500,
+        'M'=>1000,
+    );
+
+
+    $tmp[] = str_split($s);
+    $result = 0;
+    for($i=0; $i<count($tmp[0]);$i++)
+    {
+        if($i>=1 && $arr[$tmp[0][$i]]>$arr[$tmp[0][$i-1]])
+        {
+
+            $result += $arr[$tmp[0][$i]]-2*$arr[$tmp[0][$i-1]];
+        }
+        else
+        {
+            $result += $arr[$tmp[0][$i]];
+        }
+    }
+    return $result;
+}*/
 var_dump( romanToInt($s));die;
 
-
-/*switch ($s) {
-       case "IV":
-           $res = 4;
-           break;
-       case "IX":
-           $res = 9;
-           break;
-       case "XL":
-           $res = 40;
-           break;
-       case "XC":
-           $res = 90;
-           break;
-       case "CD":
-           $res = 400;
-           break;
-       case "CM":
-           $res = 900;
-           break;
-   }*/
