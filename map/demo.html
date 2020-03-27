@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>地图导航</title>
+    <style>
+        #allmap{
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body class="map">
+<div class="main">
+
+    <div id="allmap"></div>
+
+</div>
+
+
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=vPAyDM3L3XNT1cBgGBINilagXF7CvD3V"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+
+<script type="text/javascript">
+    var from_point_lng = 0;
+    var from_point_lat = 0;
+
+    // 百度地图API功能
+    // getMap('济南大学','山东省_济南市_市中区_紫荆路',116.973775,36.621191);
+    getCurrent();
+    function getCurrent() {
+
+        var map = new BMap.Map("allmap");
+
+        var poi = new BMap.Point(116.973775,36.621191);//地图中心点
+        map.centerAndZoom(poi, 15);
+        //控件
+        map.enableScrollWheelZoom();
+        var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+        var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+        map.addControl(top_left_control);
+        map.addControl(top_left_navigation);
+
+        //定位点
+        var marker = new BMap.Marker(poi); //创建marker对象
+        marker.enableDragging(); //marker可拖拽
+        map.addOverlay(marker); //在地图中添加marker
+
+        let convertor = new BMap.Convertor();
+        let pointArr = [];
+
+        pointArr.push(poi);
+        convertor.translate(pointArr, 1, 5, data => {
+            if(data.status === 0) {
+                let marker = new BMap.Marker(data.points[0]);
+                map.addOverlay(marker);
+                let label = new BMap.Label("您的位置",{offset:new BMap.Size(20,-10)});
+                marker.setLabel(label); //添加百度label
+                console.log(data.points[0]);
+                map.setCenter(data.points[0]);
+        }
+        });
+
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function (r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                var mk = new BMap.Marker(r.point);
+                // map.addOverlay(mk);
+                poistart = r.point;
+                // map.panTo(r.point);
+                alert('定位成功，您的位置：'+r.point.lng+','+r.point.lat+'可以导航');
+            } else {
+                // alert('failed'+this.getStatus());
+            }
+        }, {enableHighAccuracy: true} );
+    }
+
+</script>
+</body>
+</html>

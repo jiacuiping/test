@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <style>
+        .box{
+            width: 50%;
+            margin: 15px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        h3 {
+            line-height: 30px;
+            border-bottom: 1px dotted #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h3>网页</h3>
+    <div>
+        <a target="_blank" href="http://api.map.baidu.com/marker?location=40.047669,116.313082&title=我的位置&content=百度奎科大厦&output=html&src=webapp.baidu.openAPIdemo"><button>123</button></a>
+        <p>调起百度PC或web地图，且在（lat:39.916979519873，lng:116.41004950566）坐标点上显示名称"我的位置"，内容"百度奎科大厦"的信息窗口。</p>
+    </div>
+
+    <div>
+        <a target="_blank" href="http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=webapp.baidu.openAPIdemo"><button>234</button></a>
+        <p>//调起百度PC或Web地图，展示"西安市"从（lat:34.264642646862,lng:108.95108518068 ）"我家"到"大雁塔"的驾车路线。</p>
+    </div>
+
+    <div>
+        <a target="_blank" href="http://api.map.baidu.com/direction?origin=latlng:36.686193,117.133883|name:三庆财富世纪中心&destination=latlng:36.636838,117.024732|name:济南大学&mode=driving&region=济南&output=html&src=webapp.baidu.openAPIdemo"><button>234</button></a>
+        <a target="_blank" href="http://api.map.baidu.com/direction?origin=latlng:36.09928993,118.52766339|name:您当前位置&destination=name:山东省_济南市_市中区_舜耕路_13号|latlng:36.636838,117.024732&mode=driving&region=太原&output=html&src=yourCompanyName|yourAppName"><button>234</button></a>
+        <p>//117.133883,36.686193</p>
+    </div>
+    <div>
+        <a target="_blank" href="http://api.map.baidu.com/geoconv/v1/?coords=118.52766339,36.09928993&from=1&to=5&ak=uRhBKfzW36pGW8KGkyAhpwXDYwmjNcZP"><button>234</button></a>
+        <p>//117.133883,36.686193</p>
+    </div>
+
+    <div>
+        <button id="a">调起APP</button>
+    </div>
+
+
+</div>
+
+<div class="box">
+    <h3>Android</h3>
+    <p></p>
+    <a href="bdapp://map/place/search?query=美食&region=beijing&
+location=39.915168,116.403875&radius=1000&bounds=37.8608310000,112.5963090000,42.1942670000,118.9491260000&src=andr.baidu.openAPIdemo">POI搜索</a>
+    <a href="bdapp://map/direction?region=beijing&origin=39.98871,
+116.43234&destination=西直门&coord_type=bd09ll&mode=driving&src=andr.baidu.openAPIdemo">驾车路线规划</a>
+</div>
+
+<div class="box">
+    <h3>IOS</h3>
+    <p></p>
+</div>
+<div id="allmap"></div>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=uRhBKfzW36pGW8KGkyAhpwXDYwmjNcZP"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+
+<!--<script charset="utf-8" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
+<script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=4NYBZ-5T36W-22NRQ-OQYOG-ARY2Q-SDFB4"></script>-->
+<!--<script type="text/javascript">
+    var map = new BMap.Map("allmap");//创建Map实例，注意页面中一定要有个id为allmp的div
+    var point = new BMap.Point(116.331398,39.897445);//创建定坐标
+    map.centerAndZoom(point,12);//// 初始化地图,设置中心点坐标和地图级别
+
+    var geolocation = new BMap.Geolocation();
+    var gc = new BMap.Geocoder();//创建地理编码器
+    // 开启SDK辅助定位
+    geolocation.enableSDKLocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            alert('您的位置：' + r.point.lng + ',' + r.point.lat);
+
+            var pt = r.point;
+            map.panTo(pt);//移动地图中心点
+            //alert(r.point.lng);//X轴
+            //alert(r.point.lat);//Y轴
+
+            gc.getLocation(pt, function(rs){
+                var addComp = rs.addressComponents;
+                //alert(addComp.city);
+                alert(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+            });
+
+        }
+        else {
+            alert('failed'+this.getStatus());
+        }
+    });
+</script>-->
+<!--<script type="text/javascript">
+
+    $(function () {
+        var from_point_lat = '';
+        var from_point_lng = '';
+        getMap();
+
+        $("#a").click(function () {
+            window.location = "bdapp://map/direction?region=beijing&origin="+from_point_lat+","+from_point_lng+"&destination=济南大学&coord_type=bd09ll&mode=driving&src=andr.baidu.openAPIdemo";
+        });
+
+        function getMap() {
+            var map = new BMap.Map("allmap");
+            // var point = new BMap.Point(116.331398,39.897445);
+            var point = new BMap.Point(117.024732,36.636838);
+            map.centerAndZoom(point,12);
+
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    var mk = new BMap.Marker(r.point);
+                    map.addOverlay(mk);
+                    map.panTo(r.point);
+                    from_point_lng = r.point.lng;
+                    from_point_lat = r.point.lat;
+                    alert('您的位置：'+r.point.lng+','+r.point.lat);
+                }
+                else {
+                    alert('failed'+this.getStatus());
+                }
+            });
+        }
+    });
+</script>-->
+
+<script>
+    var x=document.getElementById("demo");
+    function getLocation(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }else{
+            alert("您的手机不支持地理定位");
+        }
+    }
+
+    function showPosition(position){
+        lat=position.coords.latitude;
+        lon=position.coords.longitude;
+        var map = new BMap.Map("container"); // 创建Map实例
+        var point = new BMap.Point(lon, lat); // 创建点坐标
+//map.centerAndZoom(point,15); //
+//map.enableScrollWheelZoom();
+        var gc = new BMap.Geocoder();
+        gc.getLocation(point, function(rs){
+            var addComp = rs.addressComponents;
+            x.innerHTML="您的当前地址为"+ addComp.district + ", " + addComp.street;
+            alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street);
+        });
+    }
+
+
+    getLocation();
+
+</script>
+
+</body>
+</html>

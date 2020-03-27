@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>腾讯地图-H5定位</title>
+
+</head>
+<body class="map">
+<div class="main">
+    <p>官网链接：https://lbs.qq.com/</p>
+
+    <div id="allmap"></div>
+
+</div>
+<!-- 腾讯 -->
+<script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js"></script>
+<script type="text/javascript">
+    //腾讯的key
+    var geolocation = new qq.maps.Geolocation("FEVBZ-N5K6W-NPXRC-OQRNC-SJK6Q-U4BGY", "myapp");
+
+    //精确定位
+    geolocation.getLocation(showPosition, showErr, options)
+
+    var options = {timeout: 3000};
+
+    function showPosition(position) {
+
+        console.log("腾讯定位");
+        console.log(position);
+
+        document.getElementById("demo").appendChild(document.createElement('pre')).innerHTML = JSON.stringify(position, null, 4);
+    };
+
+    function showErr() {
+        console.log("腾讯定位失败");
+        document.getElementById("demo").appendChild(document.createElement('pre')).innerHTML = "腾讯地图定位失败";
+    };
+
+</script>
+</body>
+</html>
